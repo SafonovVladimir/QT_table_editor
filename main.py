@@ -56,21 +56,18 @@ class TableEditor(QMainWindow):
         self.init_ui()
 
     def init_ui(self):
-        # Заголовок і розміри вікна
         if self.language == "ua":
             title = "Редактор таблиць"
         else:
             title = "Table Editor"
         self.setWindowTitle(title)
         self.setWindowState(Qt.WindowMaximized)
-        # self.setGeometry(100, 100, 800, 600)
 
         # Створення таблиці 1х1
         self.table = QTableWidget(self)
         self.table.setRowCount(1)
         self.table.setColumnCount(1)
 
-        # Створення кнопок для додавання/видалення рядків та стовпців
         save_button = QPushButton("Зберегти", self)
         open_button = QPushButton("Відкрити", self)
         add_row_button = QPushButton("Додати рядок", self)
@@ -118,7 +115,6 @@ class TableEditor(QMainWindow):
         remove_row_button.clicked.connect(self.remove_row)
         remove_column_button.clicked.connect(self.remove_column)
 
-        # Створення меню File
         save_action.triggered.connect(self.save_file)
         file_menu.addAction(save_action)
 
@@ -128,6 +124,7 @@ class TableEditor(QMainWindow):
         exit_action.triggered.connect(self.close)
         file_menu.addAction(exit_action)
 
+        # додавання теми
         dark_theme_action.triggered.connect(lambda: self.set_theme("dark"))
         theme_menu.addAction(dark_theme_action)
 
@@ -146,7 +143,6 @@ class TableEditor(QMainWindow):
         main_layout = QVBoxLayout()
         main_layout.addWidget(self.table)
         main_layout.addLayout(button_layout)
-        # main_layout.addLayout(file_button_layout)
         main_layout.addWidget(self.status_label)
 
         # Основний віджет
@@ -156,9 +152,6 @@ class TableEditor(QMainWindow):
 
         # Тема за замовчуванням
         self.set_theme("light")
-
-        # Мова за замовчуванням
-        # self.set_language("en_US")
 
     def add_row(self):
         self.table.setRowCount(self.table.rowCount() + 1)
@@ -215,8 +208,7 @@ class TableEditor(QMainWindow):
             success_msg = "Success"
             error_msg = "Error"
         file_name, _ = QFileDialog.getOpenFileName(self, open_file_lang_dialog, "",
-                                                   "Word Documents (*.docx);;All Files (*)",
-                                                   options=options)
+                                                   "Word Documents (*.docx);;All Files (*)", options=options)
         if file_name:
             try:
                 document = Document(file_name)
@@ -238,7 +230,6 @@ class TableEditor(QMainWindow):
             self.setStyleSheet("background-color: #FFF; color: #000;")
 
 
-# Запуск додатку
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = TableEditor()
